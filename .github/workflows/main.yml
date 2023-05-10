@@ -1,0 +1,29 @@
+name: Build and Push
+on:
+ push:
+   branches: 
+     - 'main'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get repository
+      uses: actions/checkout@v3
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Install dependecies
+      run: npm ci
+    - name: Build React Project
+      run: npm run build
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        path: build
+        name: build-files
+    - name: Get Artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build-files
+     
