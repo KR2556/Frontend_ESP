@@ -16,10 +16,12 @@ jobs:
         node-version: 16
     - name: Install dependecies
       run: npm ci
+    - name: Replace connection strings checkAPI
+      run: |
+           sed -i 's|https://localhost:7198/api/Check/|http://172.19.26.205:93/api/Check/|g' src/api/checkAPI.js
+           sed -i 's|https://localhost:7198/api/Process/|http://172.19.26.205:93/api/Process/|g' src/api/processAPI.js
     - name: Build React Project
       run: npm run build
-    - name: Replace connection strings
-      run: sed -i 's|https://localhost:7198/api/Check/|http://172.19.26.205:93/api|g' build/index.html
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
       with:
